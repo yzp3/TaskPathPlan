@@ -1,0 +1,88 @@
+<!--selectPoint/selectPoint.wxml-->
+<template name="inputPoint">
+  <view class='input'>
+              <image src='/imgs/{{point}}.png' />
+              <input hidden='{{endPoint.name === undefined}}' value='{{endPoint.name}}' bindfocus='pointtap' id='endPoint'></input>
+              <input hidden='{{endPoint.name === undefined ? false : true}}' placeholder='输入终点' bindfocus='pointtap' id='endPoint'></input>
+  </view>
+</template>
+
+<view>
+        <view class='input'>
+            <image src='/imgs/startPoint.png'/>
+            <input hidden='{{startPoint.name === undefined ? false : true}}' value='我的位置' bindfocus='pointtap' id='startPoint'></input>
+            <input hidden='{{startPoint.name === undefined}}' value='{{startPoint.name}}' bindfocus='pointtap' id='startPoint'></input>
+        </view>
+        <view class='input'>
+            <image src='/imgs/endPoint.png' />
+            <input hidden='{{endPoint.name === undefined}}' value='{{endPoint.name}}' bindfocus='pointtap' id='endPoint'></input>
+            <input hidden='{{endPoint.name === undefined ? false : true}}' placeholder='输入终点' bindfocus='pointtap' id='endPoint'></input>
+        </view>
+
+        <button class='button' bindtap='pathPlantap' hover-class='bg_red'>开始规划</button>
+</view>
+
+<block wx:if='{{isDisplay}}'>
+  <view style='height:6%; width:100%; display: flex; flex-flow: row'>
+    <image 
+    id='{{index}}' 
+    src='{{item}}' 
+    style='display: flex; flex-flow: row; justify-center:center; margin-right:13%; margin-left:13%;'                  bindtap='imgtap' 
+    wx:for='{{imgSrc}}'
+    wx:key='*this'></image>
+  </view>
+
+  <map
+  id="routeMap"
+  longitude="{{longitude}}" 
+  latitude="{{latitude}}"
+  polyline='{{polyline}}'
+  markers='{{markers}}'
+  include-points='{{markers}}'
+  scale='15'
+  show-location
+  style="width: 100%; height: 60%"
+  >
+  </map>
+
+  <swiper indicator-dots='true' indicator-color='#eee' indicator-active-color='#0ff51a' current='{{current}}'
+  style='display: flex; align-content:center; margin:auto' >
+      <swiper-item style='display: flex; flex-flow: row; position: fixed; bottom: 0%; height: 200rpx' 
+      wx:if="{{myMode === 'driving' || myMode === 'walking'}}">
+        <view style='width: 70%; display: flex; flex-flow: column;'>
+          <text style='font-size: large; font-weight: bold; margin: 5rpx;' wx:if="{{time>60}}">
+          {{time/60|Int}}小时{{time%60}}分钟  {{distance/1000}}公里
+          </text>
+          <text style='font-size: large; font-weight: bold; margin: 5rpx;' wx:else>
+          {{time%60}}分钟  {{distance/1000}}公里
+          </text>
+          <!-- <view>
+            <text style='font-size: small; background-color: #eee; margin: 10rpx;'>timeleast</text>
+            <text style='font-size: small; color: #999; margin: 10rpx;'>timeleast</text>
+          </view> -->
+        </view>
+        <view style='width:30%'>
+        <button class='preview' bindtap='previewtap'>预览</button>
+        </view>
+      </swiper-item>
+
+      <swiper-item style='display: flex; flex-flow: row; position: fixed; bottom: 0%; height: 200rpx' 
+      wx:for="{{busInfo}}" wx:key="" wx:if="{{myMode === 'transit'}}">
+        <view style='width: 70%; display: flex; flex-flow: column;'>
+          <text style='font-size: large; font-weight: bold; margin: 5rpx;' wx:if="{{item.time>60}}">
+          {{item.time/60 |Int}}小时{{item.time%60}}分钟  {{item.distance/1000}}公里
+          </text>
+          <text style='font-size: large; font-weight: bold; margin: 5rpx;' wx:else>
+          {{item.time%60}}分钟  {{item.distance/1000}}公里
+          </text>
+          <view>
+            <text style='font-size: small; background-color: #eee; margin: 10rpx;'>{{item.title}}</text>
+            <text style='font-size: small; color: #999; margin: 10rpx;'>步行{{item.walk}}米</text>
+          </view>
+        </view>
+        <view style='width:30%'>
+        <button id="{{index}}" class='preview' bindtap='previewtap'>预览</button>
+        </view>
+      </swiper-item>
+  </swiper>
+</block>

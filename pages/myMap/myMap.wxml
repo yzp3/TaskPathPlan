@@ -1,0 +1,38 @@
+<!--pages/myMap.wxml-->
+<!--地图容器-->
+<map
+id="myMap"
+longitude="{{longitude}}" 
+latitude="{{latitude}}"
+markers='{{markers}}'
+include-points='{{markers}}'
+scale='15'
+show-location
+style="width: 100%; height: 100%"
+>
+<!-- 搜索框 -->
+<!-- <view class='search'>
+<input placeholder='搜索地点'></input>
+</view> -->
+<cover-view class='searchDiv'>
+  <cover-image class="searchImg" src="/imgs/searchBar.png" bindtap='controltap' id='search'/>
+</cover-view>
+
+<!-- 大头针，指向地图中心位置 -->
+<cover-view class='pin'>
+  <cover-image class="img" src="/imgs/pin.png"/>
+</cover-view>
+<!-- 回到定位点 -->
+<cover-view class='controls'>
+  <cover-image class="img" src="/imgs/moveToLocation.png"  bindtap="controltap" id='moveToLocation'/>
+</cover-view>
+<!-- 放大缩小 -->
+<cover-view class='zoomDiv'>
+  <cover-image class="zoom" src="/imgs/zoomNarrow.png"  bindtap="controltap" id='zoomNarrow'/>
+</cover-view>
+<!-- 路线规划 -->
+<cover-view class='routeDiv'>
+  <cover-image class="zoom" src="/imgs/route.png"  bindtap="controltap" id='route'/>
+</cover-view>
+
+</map>

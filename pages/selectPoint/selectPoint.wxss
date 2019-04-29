@@ -1,0 +1,65 @@
+/* selectPoint/selectPoint.wxss */
+page{
+  height: 100%
+}
+
+view.inputDiv {
+    display: flex;
+    flex-direction: row;
+    top: 10%;
+    height: 100rpx;
+    background: #0ff51a;
+    align-items: center;
+}
+
+view.input {
+    display: flex;
+    width: 80%;
+    background: #ccccd1;
+    flex-direction: row;
+    border-radius: 10rpx;
+    margin-right: 20rpx;
+    margin-left: 20rpx;
+    margin-bottom: 20rpx;
+}
+
+ image {
+    height: 42rpx;
+    width: 42rpx;
+    align-self: center;
+    margin-left: 10rpx;
+    margin-right: 20rpx;
+}
+
+view.input input {
+    flex: 1;
+    font-size: 30rpx;
+}
+
+.info{
+  display: flex;
+  
+}
+/* 预览按钮 */
+.preview{
+  position: absolute;
+  top: 40rpx;
+  align-content: center;
+  background-color: rgba(32, 32, 255, 0.918);
+  font-size: large;
+  font-weight: bold;
+  color: white;
+  border-radius: 40rpx;
+  width: 180rpx;
+  height: 80rpx;
+  line-height: 75rpx;
+  text-align: center;
+}
+/* 文本 */
+/* view text{
+  
+} */
+
+swiper{
+  height: 13.5%;
+}

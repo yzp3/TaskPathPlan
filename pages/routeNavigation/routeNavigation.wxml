@@ -1,0 +1,5 @@
+<!--pages/routeNavigation/routeNavigation.wxml-->
+<view class='div'>
+  <icon type='cancel' bindtap='backtap' size='30' color='blue' ></icon>
+  <text>{{info}}</text>
+</view>

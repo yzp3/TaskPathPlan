@@ -1,0 +1,20 @@
+/* pages/search/search.wxss */
+.search{
+    border-radius: 20rpx; 
+    border: 2rpx solid;
+    background: #ccccd1;
+    width: 680rpx; 
+    height: 60rpx; 
+    margin: 25rpx;
+    padding: 10rpx;
+    display: flex;
+    flex-direction: row;
+}
+
+.search text{
+  background-color: #ccccd1;
+  color: blue;
+}
+.displayText{
+  padding: 10rpx; text-align:center;
+}

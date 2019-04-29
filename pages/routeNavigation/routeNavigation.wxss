@@ -1,0 +1,38 @@
+/* pages/routeNavigation/routeNavigation.wxss */
+page{
+  height: 100%;
+    width: 100%;
+    position: fixed;
+    background-color:rgba(0, 0, 0, .5);
+    z-index: 2;
+    top: 0;
+    left: 0;
+
+}
+
+.div{
+  position: relative;
+  height: 90%;
+  background-color:#e1d2b1;
+  margin: 5% auto;
+  padding: 20rpx ;
+  border-radius: 20rpx;
+  width: 80%;
+}
+
+.rightCorner{
+  position: absolute;
+    top: -100rpx;
+    right: -100rpx;
+}
+text{
+    width: 90%;
+    font-size: 35rpx;
+    color: #856d5f;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin: 25rpx;
+
+}

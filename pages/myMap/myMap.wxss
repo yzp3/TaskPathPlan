@@ -1,0 +1,73 @@
+/* pages/myMap.wxss */
+page{
+  height: 100%
+}
+
+.controls {
+  position: absolute;
+  top: 90%;
+  left: 10%;
+  height: 100rpx;
+  margin-top: -50rpx;
+  display: flex;
+}
+
+.searchDiv{
+  position: fixed;
+  top: 0;
+  width: 680rpx;
+  margin: 25rpx;
+}
+.searchImg{
+  display: flex;
+  justify-content: center;
+}
+
+.img{
+  width: 80rpx;
+  height: 80rpx;
+  margin: 5rpx auto;
+}
+
+.search{
+    border-radius: 20rpx; 
+    border: 2rpx solid;
+    background: white;
+    width: 680rpx; 
+    height: 60rpx; 
+    margin: 25rpx;
+    padding: 10rpx;
+}
+/* 大头针 */
+.pin{
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  height: 100rpx;
+  margin-top: -25rpx;
+  display: flex;
+}
+/* 放大缩小 */
+.zoomDiv{
+  position: absolute;
+  top: 60%;
+  left: 80%;
+  height: 120rpx;
+  margin-top: -24rpx;
+  display: flex;
+}
+.zoom{
+  width: 120rpx;
+  height: 120rpx;
+  margin: 5rpx auto;
+
+}
+/* 路线规划 */
+.routeDiv{
+  position: absolute;
+  top: 90%;
+  left: 80%;
+  height: 120rpx;
+  margin-top: -60rpx;
+  display: flex;
+}
