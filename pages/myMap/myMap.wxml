@@ -6,7 +6,7 @@ longitude="{{longitude}}"
 latitude="{{latitude}}"
 markers='{{markers}}'
 include-points='{{markers}}'
-scale='15'
+scale='{{scale}}'
 show-location
 style="width: 100%; height: 100%"
 >
@@ -27,12 +27,21 @@ style="width: 100%; height: 100%"
   <cover-image class="img" src="/imgs/moveToLocation.png"  bindtap="controltap" id='moveToLocation'/>
 </cover-view>
 <!-- 放大缩小 -->
-<cover-view class='zoomDiv'>
+<!-- <cover-view class='zoomDiv'>
   <cover-image class="zoom" src="/imgs/zoomNarrow.png"  bindtap="controltap" id='zoomNarrow'/>
-</cover-view>
+</cover-view> -->
+<cover-view class='plusDiv'>
+  <cover-image class="img" src="/imgs/plus.png"  bindtap="controltap" id='plus'/>
+</cover-view> -->
+<cover-view class='reduceDiv'>
+  <cover-image class="img" src="/imgs/reduce.png"  bindtap="controltap" id='reduce'/>
+</cover-view> -->
 <!-- 路线规划 -->
 <cover-view class='routeDiv'>
-  <cover-image class="zoom" src="/imgs/route.png"  bindtap="controltap" id='route'/>
+  <cover-image class="zoom" src="/imgs/route.png"  bindtap="controltap" id='selectPoint'/>
 </cover-view>
-
+<!-- 用户信息 -->
+<cover-view class='user'>
+  <cover-image class="img" src="/imgs/user.png"  bindtap="controltap" id='user'/>
+</cover-view>
 </map>

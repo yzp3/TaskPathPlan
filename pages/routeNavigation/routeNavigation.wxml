@@ -1,5 +1,5 @@
 <!--pages/routeNavigation/routeNavigation.wxml-->
-<view class='div'>
+<scroll-view scroll-y class='div'>
   <icon type='cancel' bindtap='backtap' size='30' color='blue' ></icon>
   <text>{{info}}</text>
-</view>
+</scroll-view>

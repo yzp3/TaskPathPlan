@@ -12,9 +12,9 @@ view.inputDiv {
     align-items: center;
 }
 
-view.input {
+.input {
     display: flex;
-    width: 80%;
+    width: 90%;
     background: #ccccd1;
     flex-direction: row;
     border-radius: 10rpx;
@@ -31,7 +31,7 @@ view.input {
     margin-right: 20rpx;
 }
 
-view.input input {
+.input input {
     flex: 1;
     font-size: 30rpx;
 }
@@ -40,6 +40,29 @@ view.input input {
   display: flex;
   
 }
+
+view.button{
+  position: relative;
+  height: 8%;
+  width: 100%;
+  display: flex;
+  background-color: white;
+  margin: auto;
+}
+
+view.button button{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: #d8d8d8;
+  height: 80rpx;
+  width: 180rpx;
+  font-size: 30rpx;
+  text-align: center;
+  padding: -10rpx;
+  margin-bottom:  30rpx;
+}
+
 /* 预览按钮 */
 .preview{
   position: absolute;
@@ -56,9 +79,13 @@ view.input input {
   text-align: center;
 }
 /* 文本 */
-/* view text{
-  
-} */
+ .text{
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  color: #999;
+  margin-left: 20%;
+} 
 
 swiper{
   height: 13.5%;

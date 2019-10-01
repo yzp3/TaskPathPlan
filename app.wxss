@@ -10,13 +10,16 @@
 } 
 
 .button{
-  position: relative;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
   background-color: #d8d8d8;
   height: 80rpx;
   width: 180rpx;
-  left: -50rpx;
+  /* left: -10%; */
   font-size: 30rpx;
   text-align: center;
   padding: -10rpx;
-  margin-bottom:  20rpx;
+  margin-bottom:  100rpx;
 }

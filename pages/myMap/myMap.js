@@ -15,17 +15,15 @@ Page({
   data: {
     longitude: 116.46,
     latitude: 39.92,
+    scale: 13,
     polyline: [],
     markers: [],
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+  myGet: function(){
     var that = this;
     wx.getLocation({
-      type: 'wgs84',
+      type: 'wgs84',  //返回可以用于wx.openLocation的经纬度
       success: function (res) {
         var log = res.longitude
         var lat = res.latitude
@@ -33,7 +31,73 @@ Page({
           longitude: log,
           latitude: lat
         })
-      },
+      }, fail: function () {
+        wx.showModal({
+          title: '授权失败',
+          content: '获取位置信息失败，使用功能将受到限制！',
+          confirmText: '授权开启',
+          cancelText: '我知道了',
+
+        })
+      }
+    })
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    let that = this;
+    // 获取位置信息
+    wx.getSetting({
+      success: (res) => {
+        console.log(res)
+        if (res.authSetting['scope.userLocation'] != undefined && res.authSetting['scope.userLocation'] != true) {//非初始化进入该页面,且未授权
+          wx.showModal({
+            title: '是否授权当前位置',
+            content: '需要获取您的地理位置，请确认授权，否则无法获取您所需数据',
+            success: function (res) {
+              console.log(res)
+              if (res.cancel) {
+                that.setData({
+                  isshowCIty: false
+                })
+                wx.showToast({
+                  title: '授权失败',
+                  icon: 'success',
+                  duration: 1000
+                })
+              } else if (res.confirm) {
+                wx.openSetting({
+                  success: function (dataAu) {
+                    console.log(dataAu)
+                    if (dataAu.authSetting["scope.userLocation"] == true) {
+                      wx.showToast({
+                        title: '授权成功',
+                        icon: 'success',
+                        duration: 1000
+                      })
+                      //再次授权，调用getLocationt的API
+                      that.myGet();
+                    } else {
+                      wx.showToast({
+                        title: '授权失败',
+                        icon: 'success',
+                        duration: 1000
+                      })
+                    }
+                  }
+                })
+              }
+            }
+          })
+        } else if (res.authSetting['scope.userLocation'] == undefined) {//初始化进入
+          that.myGet();
+        }
+        else { //授权后默认加载
+          that.myGet();
+        }
+      }
     })
   },
 
@@ -41,14 +105,14 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    this.mapCtx = wx.createMapContext('myMap')
+    this.mapCtx = wx.createMapContext('myMap');
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    // this.mapCtx.moveToLocation()
   },
 
   /**
@@ -92,79 +156,58 @@ Page({
   controltap: function (e) {
     console.log(e);
     var cid = e.currentTarget.id;
-    if (cid == "moveToLocation") {
+    if (cid == "moveToLocation") {//点击了定位图片
       this.mapCtx.moveToLocation()
     }
-    if(cid == "route"){
-      wx.navigateTo({
-        url: '/pages/selectPoint/selectPoint',
-      })
-    }
-    if(cid == "search"){
-      wx.navigateTo({
-        url: '/pages/search/search',
-      })
-    }
-  },
-  
-  //在Page({})中使用下列代码
-  //触发表单提交事件，调用接口
-  formSubmit(e) {
-    var _this = this;
-    //调用距离计算接口
-    qqmapsdk.direction({
-      mode: 'transit',//'transit'(公交路线规划)
-      //from参数不填默认当前地址
-      from: e.detail.value.start,
-      to: e.detail.value.dest,
-      success: function (res) {
-        console.log(res);
-        var ret = res.result.routes[0];
-        var count = ret.steps.length;
-        var pl = [];
-        var coors = [];
-        //获取各个步骤的polyline
-        for (var i = 0; i < count; i++) {
-          if (ret.steps[i].mode == 'WALKING' && ret.steps[i].polyline) {
-            coors.push(ret.steps[i].polyline);
-          }
-          if (ret.steps[i].mode == 'TRANSIT' && ret.steps[i].lines[0].polyline) {
-            coors.push(ret.steps[i].lines[0].polyline);
-          }
+    else if (cid == "plus") {//点击了加号
+      let scale = this.data.scale;
+      if (scale >= 5 && scale <= 18) {
+        scale++;
+        if(scale > 18){
+          scale = 18
         }
-        //坐标解压（返回的点串坐标，通过前向差分进行压缩）
-        var kr = 1000000;
-        for (var i = 0; i < coors.length; i++) {
-          for (var j = 2; j < coors[i].length; j++) {
-            coors[i][j] = Number(coors[i][j - 2]) + Number(coors[i][j]) / kr;
-          }
+        if (scale < 5) {
+          scale = 5
         }
-        //定义新数组，将coors中的数组合并为一个数组
-        var coorsArr = [];
-        for (var i = 0; i < coors.length; i++) {
-          coorsArr = coorsArr.concat(coors[i]);
-        }
-        //将解压后的坐标放入点串数组pl中
-        for (var i = 0; i < coorsArr.length; i += 2) {
-          pl.push({ latitude: coorsArr[i], longitude: coorsArr[i + 1] })
-        }
-        //设置polyline属性，将路线显示出来,将解压坐标第一个数据作为起点
-        _this.setData({
-          latitude: pl[0].latitude,
-          longitude: pl[0].longitude,
-          polyline: [{
-            points: pl,
-            color: '#FF0000DD',
-            width: 8
-          }]
+        this.setData({
+          scale
         })
-      },
-      fail: function (error) {
-        console.error(error);
-      },
-      complete: function (res) {
-        console.log(res);
       }
-    });
-  }
+    } 
+    else if (cid == "reduce") {
+      let scale = this.data.scale;
+      if (scale >= 5 && scale <= 18) {
+        scale--;
+        if (scale > 18) {
+          scale = 18
+        }
+        if (scale < 5) {
+          scale = 5
+        }
+        this.setData({
+          scale
+        })
+      }
+    }
+    else{
+      wx.navigateTo({
+        url: '/pages/'+cid+'/'+cid,
+      })
+    }
+    // if(cid == "route"){
+    //   wx.navigateTo({
+    //     url: '/pages/selectPoint/selectPoint',
+    //   })
+    // }
+    // if(cid == "search"){
+    //   wx.navigateTo({
+    //     url: '/pages/search/search',
+    //   })
+    // }
+    // if (cid == "user") {
+    //   wx.navigateTo({
+    //     url: '/pages/user/user',
+    //   })
+    // }
+  },
 })

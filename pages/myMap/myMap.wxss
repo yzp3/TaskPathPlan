@@ -48,19 +48,21 @@ page{
   display: flex;
 }
 /* 放大缩小 */
-.zoomDiv{
+.plusDiv{
   position: absolute;
-  top: 60%;
-  left: 80%;
+  top: 65%;
+  left: 82%;
   height: 120rpx;
   margin-top: -24rpx;
   display: flex;
 }
-.zoom{
-  width: 120rpx;
+.reduceDiv{
+  position: absolute;
+  top: 73%;
+  left: 82%;
   height: 120rpx;
-  margin: 5rpx auto;
-
+  margin-top: -24rpx;
+  display: flex;
 }
 /* 路线规划 */
 .routeDiv{
@@ -69,5 +71,13 @@ page{
   left: 80%;
   height: 120rpx;
   margin-top: -60rpx;
+  display: flex;
+}
+.user{
+  position: absolute;
+  top: 70%;
+  left: 10%;
+  height: 100rpx;
+  margin-top: -50rpx;
   display: flex;
 }

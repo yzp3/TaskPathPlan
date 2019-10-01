@@ -1,28 +1,42 @@
 <!--selectPoint/selectPoint.wxml-->
-<template name="inputPoint">
+<!-- <template name="inputPoint">
   <view class='input'>
               <image src='/imgs/{{point}}.png' />
               <input hidden='{{endPoint.name === undefined}}' value='{{endPoint.name}}' bindfocus='pointtap' id='endPoint'></input>
               <input hidden='{{endPoint.name === undefined ? false : true}}' placeholder='输入终点' bindfocus='pointtap' id='endPoint'></input>
   </view>
-</template>
+</template> -->
 
-<view>
-        <view class='input'>
-            <image src='/imgs/startPoint.png'/>
-            <input hidden='{{startPoint.name === undefined ? false : true}}' value='我的位置' bindfocus='pointtap' id='startPoint'></input>
-            <input hidden='{{startPoint.name === undefined}}' value='{{startPoint.name}}' bindfocus='pointtap' id='startPoint'></input>
-        </view>
-        <view class='input'>
-            <image src='/imgs/endPoint.png' />
-            <input hidden='{{endPoint.name === undefined}}' value='{{endPoint.name}}' bindfocus='pointtap' id='endPoint'></input>
-            <input hidden='{{endPoint.name === undefined ? false : true}}' placeholder='输入终点' bindfocus='pointtap' id='endPoint'></input>
-        </view>
 
-        <button class='button' bindtap='pathPlantap' hover-class='bg_red'>开始规划</button>
-</view>
+<form bindsubmit='pathPlantap'>
+  <scroll-view
+    scroll-y
+    style="height: 12%;"
+  >
+    <view class='input'>
+        <image src='/imgs/startPoint.png'/>
+        <input hidden='{{startPoint.name === undefined ? false : true}}' value='我的位置' bindfocus='pointtap' id='startPoint'></input>
+        <input hidden='{{startPoint.name === undefined}}' value='{{startPoint.name}}' bindfocus='pointtap' id='startPoint'></input>
+    </view>
 
-<block wx:if='{{isDisplay}}'>
+    <view class='input' wx:for="{{routePoint}}" wx:key="">
+        <image src='/imgs/routePoint.png'/>
+        <input hidden='{{item.name === undefined}}' value='{{item.name}}' bindfocus='pointtap' id='routePoint'></input>
+        <input hidden='{{item.name === undefined ? false : true}}' placeholder='输入途径点' bindfocus='pointtap' id='{{index}}'></input>
+    </view>
+
+    <view class='input'>
+        <image src='/imgs/endPoint.png' />
+        <input hidden='{{endPoint.name === undefined}}' value='{{endPoint.name}}' bindfocus='pointtap' id='endPoint'></input>
+        <input hidden='{{endPoint.name === undefined ? false : true}}' placeholder='输入终点' bindfocus='pointtap' id='endPoint'></input>
+    </view>
+  </scroll-view>
+  <view class='button'> 
+    <button  style='width:220rpx' bindtap='addPointtap' hover-class='bg_red'>添加途径点</button>
+    <button  form-type='submit' hover-class='bg_red'>开始规划</button>
+  </view>
+  </form>
+
   <view style='height:6%; width:100%; display: flex; flex-flow: row'>
     <image 
     id='{{index}}' 
@@ -32,6 +46,8 @@
     wx:key='*this'></image>
   </view>
 
+<block wx:if='{{isDisplay}}'>
+<!-- <block > -->
   <map
   id="routeMap"
   longitude="{{longitude}}" 
@@ -39,7 +55,7 @@
   polyline='{{polyline}}'
   markers='{{markers}}'
   include-points='{{markers}}'
-  scale='15'
+  scale='13'
   show-location
   style="width: 100%; height: 60%"
   >
@@ -86,3 +102,5 @@
       </swiper-item>
   </swiper>
 </block>
+
+<text class='text' wx:else>{{error}}</text>

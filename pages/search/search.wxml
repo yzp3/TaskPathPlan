@@ -2,7 +2,8 @@
 <!-- 搜索框 -->
 <view class='search'>
   <input
-   style='width:85%' placeholder='搜索地点' focus='true' confirm-type='search'   
+   style='width:85%' placeholder='搜索地点' focus='true' confirm-type='search'  
+   focus='true'
    bindinput='getsuggest'
    bindconfirm='confirmtap'
    value='{{backfill}}'>
@@ -16,7 +17,7 @@
       <view style='border:thin solid #eee; padding:10rpx'>
         <!--根据需求渲染相应数据-->
         <!--渲染地址title-->
-        <view style="text-align:center;" bindtap="backfill" id="{{index}}">{{item.title}}</view>
+        <view style="text-align:center;" bindtap="backfill" id="{{index+1}}">{{item.title}}</view>
         <!--渲染详细地址-->
         <view style="font-size:12px;color:#666;text-align:center;">{{item.addr}}</view>
       </view>

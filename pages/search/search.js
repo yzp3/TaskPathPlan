@@ -32,43 +32,55 @@ Page({
   confirmtap: function(e){
     console.log(e)
     var _this = this;
-    qqmapsdk.search({
-      keyword: e.detail.value,
-      success: function (res) {
-        var mks = []
-        for (var i = 0; i < res.data.length; i++) {
-          mks.push({ // 获取返回结果，放到mks数组中
-            title: res.data[i].title,
-            id: res.data[i].id,
-            latitude: res.data[i].location.lat,
-            longitude: res.data[i].location.lng,
-            iconPath: "/imgs/location.png", //图标路径
-            width: 30,
-            height: 30
+    //回传数据
+    var pages = getCurrentPages();
+    var currentPage = pages[pages.length - 1];
+    var prePage = pages[pages.length - 2];
+    if (e.detail.lat === undefined) {
+      qqmapsdk.search({
+        keyword: e.detail.value,
+        success: function (res) {
+          var mks = []
+          for (var i = 0; i < res.data.length; i++) {
+            mks.push({ // 获取返回结果，放到mks数组中
+              title: res.data[i].title,
+              id: res.data[i].id,
+              latitude: res.data[i].location.lat,
+              longitude: res.data[i].location.lng,
+              iconPath: "/imgs/location.png", //图标路径
+              width: 30,
+              height: 30
+            })
+          } 
+          prePage.setData({ //设置markers属性，将搜索结果显示在地图中
+            // scale: 15,
+            markers: mks,
           })
+        },
+        fail: function (res) {
+          console.log(res);
+        },
+        complete: function (res) {
+          console.log(res);
         }
-        //回传数据
-        var pages = getCurrentPages();
-        var currentPage = pages[pages.length - 1];
-        var prePage = pages[pages.length - 2];
-        prePage.setData({ //设置markers属性，将搜索结果显示在地图中
-          markers: mks,
-        })
-        wx.navigateBack({
-          
-        })
-        // wx.openLocation({
-        //   latitude: res.data[0].location.lat,
-        //   longitude: res.data[0].location.lng,
-        // })
-      },
-      fail: function (res) {
-        console.log(res);
-      },
-      complete: function (res) {
-        console.log(res);
-      }
-    })
+      })
+    }else{
+      prePage.setData({ //设置markers属性，将搜索结果显示在地图中
+        // scale: 15,
+        markers: [{ // 获取返回结果，放到mks数组中
+          title: e.detail.value,
+          id: 0,
+          latitude: e.detail.lat,
+          longitude: e.detail.lng,
+          iconPath: "/imgs/location.png", //图标路径
+          width: 30,
+          height: 30
+        }],
+        latitude: e.detail.lat,
+        longitude: e.detail.lng,
+      })
+    }
+    wx.navigateBack();
   },
 
   //数据回填方法
@@ -81,7 +93,11 @@ Page({
           backfill: title
         });
         this.confirmtap({
-          detail: {value: title}
+          detail: {
+            value: title,
+            lat: this.data.suggestion[i].latitude,
+            lng: this.data.suggestion[i].longitude,
+          }
         })
       }
     }
@@ -105,7 +121,6 @@ Page({
       location: loc,
       //region:'安徽', //设置城市名，限制关键词所示的地域范围，非必填参数
       success: function (res) {//搜索成功后的回调
-        console.log(res);
         var sug = [];
         for (var i = 0; i < res.data.length; i++) {
           sug.push({ // 获取返回结果，放到sug数组中
@@ -149,10 +164,9 @@ Page({
     this.setData({
       backfill: key,
     })
-    this.getsuggest({
+    this.confirmtap({
       detail: {value: key}
     })
-    
 
   },
 

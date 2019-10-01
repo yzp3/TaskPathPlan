@@ -63,6 +63,7 @@ Page({
         } else {
           console.log(3);
           var routePoint = prePage.data.routePoint;
+          routePoint.pop();
           routePoint.push(dataPoint);
           prePage.setData({
             routePoint
@@ -71,11 +72,6 @@ Page({
         wx.navigateBack({
           delta: 1
         })
-
-        // wx.setStorageSync(JSON.stringify(dataPoint), point);
-        // wx.redirectTo({
-        //   url: '/pages/selectPoint/selectPoint?lat='+res.latitude+'&log='+res.longitude+'&name='+res.name,
-        // })
       },
     })
   },
